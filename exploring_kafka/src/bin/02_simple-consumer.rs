@@ -66,7 +66,7 @@ async fn main() -> Result<()> {
         .set("bootstrap.servers", opts.brokers)
         .set("enable.partition.eof", "false")
         .set("session.timeout.ms", "6000")
-        .set("enable.auto.commit", "true")
+        .set("enable.auto.commit", "false")
         //.set("statistics.interval.ms", "30000")
         //.set("auto.offset.reset", "smallest")
         .create_with_context(context)
