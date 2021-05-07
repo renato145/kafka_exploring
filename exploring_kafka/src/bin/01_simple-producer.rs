@@ -16,6 +16,9 @@ struct Opts {
     /// Destination topic
     #[clap(short, long)]
     topic: String,
+    /// Key is used when you want messages to go to the same partition
+    #[clap(short, long)]
+    key: Option<String>,
     /// Broker list in kafka format
     #[clap(short, long, default_value = "localhost:9092")]
     brokers: String,
@@ -36,8 +39,8 @@ async fn main() -> Result<()> {
         .create()
         .context("Failed to create producer")?;
 
-    // key is used when you want messages to go to the same partition
-    let record = FutureRecord::to(&opts.topic).payload(&opts.msg).key("");
+    let key = opts.key.as_ref().map_or("", |o| o.as_str());
+    let record = FutureRecord::to(&opts.topic).payload(&opts.msg).key(key);
     let (partition, offset) = producer
         .send(record, Duration::from_secs(0))
         .await
