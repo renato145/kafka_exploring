@@ -36,11 +36,16 @@ async fn main() -> Result<()> {
         .create()
         .context("Failed to create producer")?;
 
+    // key is used when you want messages to go to the same partition
     let record = FutureRecord::to(&opts.topic).payload(&opts.msg).key("");
-    producer
+    let (partition, offset) = producer
         .send(record, Duration::from_secs(0))
         .await
         .expect("Error sending the message");
-    info!("Message received");
+
+    info!(
+        "Message received (partition={}, offset={})",
+        partition, offset
+    );
     Ok(())
 }
