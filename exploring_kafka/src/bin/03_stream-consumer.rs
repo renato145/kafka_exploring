@@ -21,9 +21,6 @@ struct Opts {
     /// Consumer group
     #[clap(short, long, default_value = "test_group")]
     group: String,
-    /// Key is used when you want messages to go to the same partition
-    #[clap(short, long)]
-    key: Option<String>,
     /// Broker list in kafka format
     #[clap(short, long, default_value = "localhost:9092")]
     brokers: String,
