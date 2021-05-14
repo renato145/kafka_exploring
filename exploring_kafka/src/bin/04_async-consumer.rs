@@ -69,7 +69,7 @@ async fn main() -> Result<()> {
     (0..opts.workers)
         .map(|i| tokio::spawn(run_async_processor(i, opts.clone())))
         .collect::<FuturesUnordered<_>>()
-        .for_each(|_| async { () })
+        .for_each(|_| async {})
         .await;
 
     Ok(())
